@@ -1,4 +1,4 @@
-FROM ubuntu:17.04
+FROM ubuntu:16.04
 MAINTAINER Mikhail Shishkin <megakrutak@gmail.com>
 
 ENV VERSION_SDK_TOOLS "3859397"
