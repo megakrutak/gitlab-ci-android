@@ -7,17 +7,6 @@ ENV ANDROID_HOME "/sdk"
 ENV PATH "$PATH:${ANDROID_HOME}/tools"
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV PATH "$PATH:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools/bin"
-
-RUN apt-get update && \
-    echo y | apt-get install apt-transport-https
-
-RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
-    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
-
-RUN apt-get update && \
-    echo y | apt-get install google-cloud-sdk
-
 RUN apt-get -qq update && \
     apt-get install -qqy --no-install-recommends \
       bzip2 \
@@ -51,3 +40,14 @@ RUN mkdir -p /root/.android && \
 
 RUN while read -r package; do PACKAGES="${PACKAGES}${package} "; done < /sdk/packages.txt && \
     ${ANDROID_HOME}/tools/bin/sdkmanager ${PACKAGES}
+    
+ENV PATH "$PATH:${ANDROID_HOME}/platform-tools:${ANDROID_HOME}/tools/bin"
+
+RUN apt-get update && \
+    echo y | apt-get install apt-transport-https
+
+RUN echo "deb https://packages.cloud.google.com/apt cloud-sdk-xenial main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && \
+    curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add -
+
+RUN apt-get update && \
+    echo y | apt-get install google-cloud-sdk
